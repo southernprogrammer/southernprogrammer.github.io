@@ -42,19 +42,16 @@ You will have the next parameter later. You can create an intermediate method fr
 parameter and then use that method at the time of your choosing. In Python, this is achieved by using a partial.</p>
 <p>Let's say that you ran os.listdir, this method returns the unqualified file names inside of a folder. The only problem
 is that I want the file names fully qualified with it's entire path. So I should use os.path.join on each of the items.</p>
-<div class="highlight"><pre><span></span>   <span class="kn">import</span> <span class="nn">os</span>
-   <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
-   <span class="n">folder</span> <span class="o">=</span> <span class="s2">&quot;/your/path/to/whatever&quot;</span>
-   <span class="n">folder_join</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">,</span> <span class="n">folder</span><span class="p">)</span>
-   <span class="n">images</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.jpg&quot;</span><span class="p">)]</span>
-   <span class="n">images</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">folder_join</span><span class="p">,</span> <span class="n">images</span><span class="p">))</span>
-   <span class="k">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">images</span><span class="p">))</span>
-
-
-<span class="n">If</span> <span class="n">one</span><span class="o">.</span><span class="n">jpg</span><span class="p">,</span> <span class="n">two</span><span class="o">.</span><span class="n">jpg</span><span class="p">,</span> <span class="ow">and</span> <span class="n">three</span><span class="o">.</span><span class="n">jpg</span> <span class="n">are</span> <span class="ow">in</span> <span class="n">our</span> <span class="n">folder</span><span class="p">,</span> <span class="n">we</span> <span class="n">would</span> <span class="n">get</span> <span class="n">this</span> <span class="n">output</span><span class="p">:</span>
-
-<span class="n">output</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;/your/path/to/whatever/one.jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;/your/path/to/whatever/two.jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;/your/path/to/whatever/three.jpg&#39;</span><span class="p">]</span>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="n">folder</span> <span class="o">=</span> <span class="s2">&quot;/your/path/to/whatever&quot;</span>
+<span class="n">folder_join</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">,</span> <span class="n">folder</span><span class="p">)</span>
+<span class="n">images</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.jpg&quot;</span><span class="p">)]</span>
+<span class="n">images</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">folder_join</span><span class="p">,</span> <span class="n">images</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">images</span><span class="p">))</span>
 </pre></div>
+<p>If one.jpg, two.jpg, and three.jpg are in our folder, we would get this output =&gt;
+['/your/path/to/whatever/one.jpg', '/your/path/to/whatever/two.jpg', '/your/path/to/whatever/three.jpg']</p>
 <p><a href="http://bryanprice.net/python-partials.html#disqus_thread">comments</a></p>                </article>
             </aside><!-- /#featured -->
                 <section id="content" class="body">
