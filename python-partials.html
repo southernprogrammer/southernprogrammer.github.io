@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8" />
-        <title>Bryan Price - Python</title>
+        <title>Python Partials</title>
         <link rel="stylesheet" href="http://bryanprice.net/theme/css/custom.css" />
         <link href="http://bryanprice.net/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Bryan Price Atom Feed" />
 
@@ -23,20 +23,25 @@
                 </nav>
 <div id="submenu">
                     <ul>
-                            <li><a href="http://bryanprice.net/category/blog.html">Blog</a></li>
+                            <li class="active"><a href="http://bryanprice.net/category/blog.html">Blog</a></li>
                             <li><a href="http://bryanprice.net/category/project-updates.html">Project Updates</a></li>
                     </ul>
                 <div>
         </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="http://bryanprice.net/python-partials.html" rel="bookmark"
+           title="Permalink to Python Partials">Python Partials</a></h1>
+    </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="http://bryanprice.net/python-partials.html">Python Partials</a></h1>
+    <div class="entry-content">
 <footer class="post-info">
         <span>Mon 02 May 2016</span>
 	        <span>| in <a href="http://bryanprice.net/category/blog.html">Blog</a></span>
 <span>| tags: <a href="http://bryanprice.net/tag/python.html">Python</a></span>
-</footer><!-- /.post-info --><p>Have you ever heard of the concept of currying? If not, I'm about to blow your mind. Let's say that you have
+</footer><!-- /.post-info -->      <p>Have you ever heard of the concept of currying? If not, I'm about to blow your mind. Let's say that you have
 a method you want to use and it takes two parameters. The only problem is that you only have one parameter at the moment.
 You will have the next parameter later. You can create an intermediate method from the other method that takes one
 parameter and then use that method at the time of your choosing. In Python, this is achieved by using a partial.</p>
@@ -55,54 +60,24 @@ is that I want the file names fully qualified with it's entire path. So I should
 
 <span class="n">output</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;/your/path/to/whatever/one.jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;/your/path/to/whatever/two.jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;/your/path/to/whatever/three.jpg&#39;</span><span class="p">]</span>
 </pre></div>
-<p><a href="http://bryanprice.net/python-partials.html#disqus_thread">comments</a></p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <ol id="posts-list" class="hfeed">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="http://bryanprice.net/python-magic-functions.html" rel="bookmark"
-                           title="Permalink to Python Magic Functions">Python Magic Functions</a></h1>
-                </header>
+    </div><!-- /.entry-content -->
+    <div class="comments">
+      <h2>Comments !</h2>
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_identifier = "python-partials.html";
+        var disqus_url = "http://bryanprice.net/python-partials.html";
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//bryanpricenet.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+    </div>
 
-                <div class="entry-content">
-<footer class="post-info">
-        <span>Thu 07 May 2015</span>
-	        <span>| in <a href="http://bryanprice.net/category/blog.html">Blog</a></span>
-<span>| tags: <a href="http://bryanprice.net/tag/python.html">Python</a></span>
-</footer><!-- /.post-info -->                <p>Python has many magic functions that will allow your classes to do all
-kinds of fun stuff. You may want your object to act like a dictionary,
-or a list, you may want to make sure str() prints your object a certain
-way, or you may want to override operators ...</p>
-                <a class="readmore" href="http://bryanprice.net/python-magic-functions.html">read more</a>
-<p><a href="http://bryanprice.net/python-magic-functions.html#disqus_thread">comments</a></p>                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="http://bryanprice.net/python-list-comprehension-and-sets.html" rel="bookmark"
-                           title="Permalink to Python List Comprehension and Sets">Python List Comprehension and Sets</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <span>Thu 29 January 2015</span>
-	        <span>| in <a href="http://bryanprice.net/category/blog.html">Blog</a></span>
-<span>| tags: <a href="http://bryanprice.net/tag/python.html">Python</a></span>
-</footer><!-- /.post-info -->                <p>I work for a company that does GIS work, and over the past week or so
-I've been working on a script that does a lot of different things. One
-of it's subroutines deletes data from Oracle.</p>
-<p>First I was told (or I interpreted) it was safe to ...</p>
-                <a class="readmore" href="http://bryanprice.net/python-list-comprehension-and-sets.html">read more</a>
-<p><a href="http://bryanprice.net/python-list-comprehension-and-sets.html#disqus_thread">comments</a></p>                </div><!-- /.entry-content -->
-            </article></li>
-            </ol><!-- /#posts-list -->
-<p class="paginator">
-    Page 1 / 1
-</p>
-            </section><!-- /#content -->
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>blogroll</h2>
