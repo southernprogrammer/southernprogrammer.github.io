@@ -49,7 +49,7 @@ from the Oracle connection. So this is similar to my first stab at the
 code that deletes data from Oracle.</p>
 <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">arcpy</span>
 
-<span class="n">arcpy</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">workspace</span> <span class="o">=</span> <span class="s2">r&quot;c:\oracle_connection.sde&quot;</span> <span class="c1"># file that holds all the connection info</span>
+<span class="n">arcpy</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">workspace</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;c:\oracle_connection.sde&quot;</span> <span class="c1"># file that holds all the connection info</span>
 <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">ListTables</span><span class="p">()</span> <span class="o">+</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">ListFeatureClasses</span><span class="p">()</span> <span class="o">+</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">ListDatasets</span><span class="p">():</span>
     <span class="n">arcpy</span><span class="o">.</span><span class="n">Delete_management</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
 </pre></div>
@@ -68,7 +68,7 @@ to delete all tables. My solution was to only list tables that started
 with the database user followed by a period.</p>
 <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">arcpy</span>
 
-<span class="n">arcpy</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">workspace</span> <span class="o">=</span> <span class="s2">r&quot;c:\oracle_connection.sde&quot;</span> <span class="c1"># file that holds all the connection info</span>
+<span class="n">arcpy</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">workspace</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;c:\oracle_connection.sde&quot;</span> <span class="c1"># file that holds all the connection info</span>
 <span class="n">desc</span> <span class="o">=</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">Describe</span><span class="p">(</span><span class="n">arcpy</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">workspace</span><span class="p">)</span>
 <span class="n">dbo</span> <span class="o">=</span> <span class="n">desc</span><span class="o">.</span><span class="n">connectionProperties</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
 
@@ -97,7 +97,7 @@ intersections with the lists.</p>
     <span class="sd">&quot;&quot;&quot;@param feature_classes: list of unqualified feature classes that we will drop&quot;&quot;&quot;</span>
     <span class="sd">&quot;&quot;&quot;@type tables: [str]&quot;&quot;&quot;</span>
     <span class="sd">&quot;&quot;&quot;@type feature_classes: [str]&quot;&quot;&quot;</span>
-    <span class="n">arcpy</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">workspace</span> <span class="o">=</span> <span class="s2">r&quot;c:\oracle_connection.sde&quot;</span> <span class="c1"># file that holds all the connection info</span>
+    <span class="n">arcpy</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">workspace</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;c:\oracle_connection.sde&quot;</span> <span class="c1"># file that holds all the connection info</span>
     <span class="n">desc</span> <span class="o">=</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">Describe</span><span class="p">(</span><span class="n">arcpy</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">workspace</span><span class="p">)</span>
     <span class="n">dbo</span> <span class="o">=</span> <span class="n">desc</span><span class="o">.</span><span class="n">connectionProperties</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
 
