@@ -31,51 +31,55 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="http://bryanprice.net/python-orderby-thenby.html">Python OrderBy ThenBy</a></h1>
+                    <h1 class="entry-title"><a href="http://bryanprice.net/python-callables.html">Python Callables</a></h1>
 <footer class="post-info">
-        <span>Sat 05 May 2018</span>
+        <span>Tue 15 May 2018</span>
 	        <span>| in <a href="http://bryanprice.net/category/blog.html">Blog</a></span>
 <span>| tags: <a href="http://bryanprice.net/tag/python.html">python</a></span>
-</footer><!-- /.post-info --><p>The other day I found a bug in a python file I had written. I ordered a list by two attributes descending, when I really
-wanted to order the list by one attribute descending and the other ascending.</p>
-<p>For reference, I started off with something similar to the following code.
-I'm using tuples here instead of attributes off of an object, but the premise remains.</p>
-<div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
-<span class="n">lst</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="c1"># if using an object the line would look similar to this lst.sort(key=lambda x: (x.first_attribute, x.second_attribute), reverse=True)</span>
+</footer><!-- /.post-info --><p>In a previous post, I talked about python partials. They provide a way to make a new function from another with some parameters at the front pre-filled.
+What can we do to fix this? Well there is a 3rd party library called <a class="reference external" href="https://stackoverflow.com/questions/7811247/how-to-fill-specific-positional-arguments-with-partial-in-python">funcy that provides an rpartial method</a>.
+Or you could do something custom, like making a callable. You can make a callable class by implementing the magic function __call__.
+This lets you call an object instance like a method.</p>
+<div class="highlight"><pre><span></span><span class="n">thing</span> <span class="o">=</span> <span class="n">MyCallableClass</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">thing</span><span class="p">()</span>
 </pre></div>
-<p>This is all fine, great, and wonderful, but I really needed to sort by the first attribute descending and the second ascending.
-So how do we accomplish this? We use cmp on the sort. A compare function takes 2 parameters and returns an integer.
-If the integer is negative, the sort knows that the first item is should be favored,
-if 0 it should favor neither, and if positive the second item should be favored.</p>
-<div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
-<span class="n">lst</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="nb">cmp</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">else</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<p>So now let's apply this concept to implement rpartial.</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RPartial</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="n">method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">args</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">))</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="n">r_join</span> <span class="o">=</span> <span class="n">RPartial</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">,</span> <span class="s2">&quot;my&quot;</span><span class="p">,</span> <span class="s2">&quot;cool&quot;</span><span class="p">,</span> <span class="s2">&quot;path&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r_join</span><span class="p">(</span><span class="s2">&quot;C:</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">))</span> <span class="c1"># c:\my\cool\path is output</span>
 </pre></div>
-<p>If you aren't familiar with lambda's they are just functions that take in parameters and no return statement is needed.
-Everything right of the colon is returned. So what's going on here? Well if the first values are equal and x
-is less than y (x[1]-y[1] &lt; 0) we favor x (ascending). Otherwise we just compare y[0] and x[0].</p>
-<p>What about Python 3.0? It doesn't support cmp, but don't worry there's a workaround. If you are in Python 3.2 you can utilize
-a method called functools.cmp_to_key(). If you are between 3.0 and 3.2, you will have to implement the method yourself.
-See <a class="reference external" href="https://docs.python.org/3/howto/sorting.html">https://docs.python.org/3/howto/sorting.html</a>.</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">functools</span>
-<span class="n">lst</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
-<span class="n">lst</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">functools</span><span class="o">.</span><span class="n">cmp_to_key</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">else</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-</pre></div>
-<p>The key variable is also available in Python 2, but there you will probably just use it as it's meant to be used:
-to tell what the key of your sort is.</p>
-<p>So how would you compare strings? You should use locale.strcoll</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">functools</span>
-<span class="kn">import</span> <span class="nn">locale</span>
-<span class="n">lst</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
-<span class="n">lst</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">functools</span><span class="o">.</span><span class="n">cmp_to_key</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span>  <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">else</span> <span class="n">locale</span><span class="o">.</span><span class="n">strcoll</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
-</pre></div>
-<p>In C# it's really easy to do this kind of thing. Linq has an OrderBy, OrderByDescending, ThenBy, and ThenByDescending methods.
-But even though it's not as easy to do this in python, it's not really that difficult.</p>
-<p><a href="http://bryanprice.net/python-orderby-thenby.html#disqus_thread">comments</a></p>                </article>
+<p>This is much more verbose than funcy's version of rpartial, but it does serve well as an example of how you can use callables.
+You could definitely make something more specific for your needs.</p>
+<p><a href="http://bryanprice.net/python-callables.html#disqus_thread">comments</a></p>                </article>
             </aside><!-- /#featured -->
                 <section id="content" class="body">
                     <h1>Other articles</h1>
                     <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="http://bryanprice.net/python-orderby-thenby.html" rel="bookmark"
+                           title="Permalink to Python OrderBy ThenBy">Python OrderBy ThenBy</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <span>Sat 05 May 2018</span>
+	        <span>| in <a href="http://bryanprice.net/category/blog.html">Blog</a></span>
+<span>| tags: <a href="http://bryanprice.net/tag/python.html">python</a></span>
+</footer><!-- /.post-info -->                <p class="first last">C#'s Linq can  do .OrderBy and .ThenBy on an enumerable, can Python do something similar?</p>
+
+                <a class="readmore" href="http://bryanprice.net/python-orderby-thenby.html">read more</a>
+<p><a href="http://bryanprice.net/python-orderby-thenby.html#disqus_thread">comments</a></p>                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
